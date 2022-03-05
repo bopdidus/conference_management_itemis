@@ -1,0 +1,8 @@
+com\mycompany\conferencemanagement\ConferenceManagement.class
+com\mycompany\conferencemanagement\Model\SessionType.class
+com\mycompany\conferencemanagement\Model\Track.class
+com\mycompany\conferencemanagement\Model\Session.class
+com\mycompany\conferencemanagement\utils\Verify.class
+com\mycompany\conferencemanagement\Model\Talk.class
+com\mycompany\conferencemanagement\Model\Conference.class
+com\mycompany\conferencemanagement\Model\Session$1.class
