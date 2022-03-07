@@ -12,8 +12,19 @@ public class Conference {
         this.tracks = new ArrayList<>();
     }
 
-    public int AddTrack(Track _track){
-        this.tracks.add(_track);
-        return this.tracks.size();
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
     }
 }

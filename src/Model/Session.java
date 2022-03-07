@@ -40,6 +40,7 @@ public class Session {
                         if((this.SumTime() + tls.get(k).getTime()) == 180)
                         {
                             this.talks.add(tls.get(k));
+                            tls.remove(k);
                         }
                     }
                     break;
@@ -60,6 +61,7 @@ public class Session {
                         if((this.SumTime() + tls.get(k).getTime()) <= 240)
                         {
                             this.talks.add(tls.get(k));
+                            tls.remove(k);
                         }
                     }
                     break;
