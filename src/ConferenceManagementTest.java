@@ -1,10 +1,13 @@
+import Model.Session;
 import Model.Talk;
+import Model.Track;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 public class ConferenceManagementTest {
 
@@ -26,8 +29,13 @@ public class ConferenceManagementTest {
         String title = "";
         int time = 23;
         int expResult = 0;
-        int result = ConferenceManagement.CreateTalk(title, time).size();
-        assertEquals(expResult, result);
+        Talk result = null;
+
+        assertThrowsExactly(Exception.class, ()->{
+            new Talk(title,time);
+        });
+
+
 
     }
 
@@ -41,10 +49,10 @@ public class ConferenceManagementTest {
             talks.add(new Talk("Network security", 65));
             talks.add(new Talk("Network systems", 65));
             talks.add(new Talk("Embedded Systems",60));
-
-            assertEquals(2,ConferenceManagement.CreateSession(talks).size());
+            List<Session> sessions = ConferenceManagement.CreateSession(talks);
+            assertEquals(2,sessions.size());
         }catch (Exception ex){
-
+            System.out.println(ex.getMessage());
         }
 
     }
@@ -59,10 +67,11 @@ public class ConferenceManagementTest {
             talks.add(new Talk("Network security", 65));
             talks.add(new Talk("Network systems", 65));
             talks.add(new Talk("Embedded Systems",60));
-
-            assertEquals(3, ConferenceManagement.CreateTrack(ConferenceManagement.CreateSession(talks)).size());
+            List<Track> tracks = ConferenceManagement.CreateTrack(ConferenceManagement.CreateSession(talks));
+            int n=tracks.size();
+            assertEquals(1, n);
         }catch (Exception ex){
-
+            System.out.println(ex.getMessage());
         }
 
     }

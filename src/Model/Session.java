@@ -32,7 +32,8 @@ public class Session {
     public List<Talk> AddTalks(List<Talk> tls) {
         int i = 0;
         if (type == SessionType.MORNING) {
-            for (i = 0; i < tls.size(); i++) {
+            for (i = 0; i < tls.size(); i++)
+            {
                 if((this.SumTime() + tls.get(i).getTime()) > 180)
                 {
                     for(int k=i;k< tls.size();k++)
@@ -48,7 +49,7 @@ public class Session {
                     this.talks.add(tls.get(i));
                 }
             }
-            return (i== tls.size())?null:tls.subList(i, tls.size() - 1);
+            return (i== tls.size() || tls.size()<=0)?null:tls.subList(i-1, tls.size() - 1);
         }
 
         else {
@@ -69,7 +70,7 @@ public class Session {
                     this.talks.add(tls.get(i));
                 }
             }
-            return (i== tls.size())?null:tls.subList(i, tls.size() - 1);
+            return (i== tls.size() || tls.size()<=0)?null:tls.subList(i-1, tls.size() - 1);
         }
 
     }

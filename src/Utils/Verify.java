@@ -3,6 +3,8 @@ package Utils;
 import Model.Talk;
 import Model.Track;
 
+import java.util.List;
+
 public class Verify {
     public static boolean ContainsDigit(String input)
     {
@@ -33,6 +35,9 @@ public class Verify {
 
     public static int CheckHourNetworkingEvent(Track track)
     {
+        /*
+        *this function allows me to know if the networking events starts exactly at 4 or 5pm
+        * */
         int sumTime = 0;
         for (Talk t : track.getAfternoonSession().getTalks())
         {
@@ -40,4 +45,6 @@ public class Verify {
         }
         return sumTime;
     }
+
+
 }

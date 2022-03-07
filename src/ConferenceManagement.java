@@ -12,10 +12,10 @@ import java.util.Scanner;
 public class ConferenceManagement {
 
     public static void main(String[] args) {
-        String title="";
-        List<Talk> talks = new ArrayList<Talk>();
+
+        List<Talk> talks = new ArrayList<>();
         Conference conf;
-        int time=0;
+
         System.out.println("***************WELCOME TO CONFERENCE MANAGEMENT SYSTEM**********************************");
         System.out.println("");
         System.out.println("");
@@ -25,8 +25,26 @@ public class ConferenceManagement {
         System.out.println("Enter the theme of the conference");
         String theme = sc.nextLine();
         conf = new Conference(theme);
+        talks = CreateTalk();
+        System.out.println("List of talks");
+
+        try {
+            conf.setTracks(CreateTrack(CreateSession(talks)));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        ShowConference(conf);
+    }
+
+    public static List<Talk> CreateTalk(){
+
+        List<Talk> talks = new ArrayList<Talk>();
+        String title="";
+        int time=0;
         System.out.println("Please enter the talks and press q(quit) to stop (-: ");
         System.out.println("\n");
+        Scanner sc = new Scanner(System.in);
         while(!title.equalsIgnoreCase("q"))
         {
             System.out.println("Enter the title:");
@@ -40,7 +58,7 @@ public class ConferenceManagement {
 
             try {
                 time = sc.nextInt();
-               talks = CreateTalk(title, time);
+                talks.add(new Talk(title, time));
                 sc.nextLine();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -48,28 +66,14 @@ public class ConferenceManagement {
             }
         }
 
-        conf.setTracks(CreateTrack(CreateSession(talks)));
-
-    }
-
-    public static List<Talk> CreateTalk(String title, int time){
-        List<Talk> talks = new ArrayList<Talk>();
-
-        try{
-            talks.add(new Talk(title, time));
-
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            System.out.println("Erreur vous devriez recommencer");
-            return talks;
-        }
         return talks;
     }
 
     public static List<Session> CreateSession(List<Talk> list)
     {
+
         List<Session> sessions = new ArrayList<>();
-        while (list.size()>1){
+        while (list.size()>=1){
             Session session = new Session(SessionType.MORNING);
             list = session.AddTalks(list);
             sessions.add(session);
@@ -78,16 +82,17 @@ public class ConferenceManagement {
             Session session1 = new Session(SessionType.AFTERNOON);
             list = session1.AddTalks(list);
             sessions.add(session1);
+            if(list == null || list.size()<=0)
+                break;
         }
         return  sessions;
     }
 
     public static List<Track> CreateTrack(List<Session> list){
         List<Track>tracks = new ArrayList<>();
-        int length = (int)Math.ceil(list.size()/2);
         List<Session> morningSession = new ArrayList<>();
         List<Session> afternoonSession = new ArrayList<>();
-        for(int i = 0; i<=list.size();i++){
+        for(int i = 0; i<list.size();i++){
             if(list.get(i).getType() == SessionType.MORNING){
                 morningSession.add(list.get(i));
             }else {
@@ -113,4 +118,57 @@ public class ConferenceManagement {
         }
         return tracks;
     }
+
+    public static void ShowConference(Conference conference)
+    {
+
+        String[] day = {"AM", "PM"};
+        for(int i=0; i< conference.getTracks().size(); i++)
+        {
+            int hour=9;
+            int minute=0;
+            System.out.println("Track "+ (i+1));
+            System.out.println();
+
+            for(Talk t: conference.getTracks().get(i).getMorningSession().getTalks())
+            {
+                System.out.print(">");
+                System.out.print(String.format("%2d",hour));
+                System.out.print(":");
+                System.out.print(String.format("%2d",minute));
+                System.out.print( " " + day[0] +" ");
+                System.out.println(t.getTitle() + " "+t.getTime()+ " min");
+                minute+=t.getTime();
+                if(minute>=60){
+                    hour+=1;
+                    minute-=60;
+                }
+            }
+            System.out.println(">12:00PM  Lunch");
+            hour=1;
+            minute=0;
+            for(Talk t: conference.getTracks().get(i).getAfternoonSession().getTalks())
+            {
+                System.out.print(">");
+                System.out.print(String.format("%2d",hour));
+                System.out.print(":");
+                System.out.print(String.format("%2d",minute));
+                System.out.print(" "+day[1]+" ");
+                System.out.println(t.getTitle()+ " "+t.getTime()+ " min");
+                minute+=t.getTime();
+                if(minute>=60){
+                    hour+=1;
+                    minute-=60;
+                }
+            }
+            System.out.print(">");
+            System.out.print(String.format("%2d",hour));
+            System.out.print(":");
+            System.out.print(String.format("%2d",minute));
+            System.out.println("PM Networking Event");
+
+
+        }
+    }
+
 }

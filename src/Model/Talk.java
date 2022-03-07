@@ -11,7 +11,7 @@ public class Talk {
             throw new Exception("The title should not contains a digit");
         if(_title.isEmpty())
             throw new Exception("The title should not be empty");
-        this.title = title;
+        this.title = _title;
         if(Verify.CheckLigthningFive(_time)!=true)
             throw new Exception("The time should be in 5 lightning");
         this.time = _time;
