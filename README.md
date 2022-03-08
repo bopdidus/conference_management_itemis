@@ -12,6 +12,6 @@ this project user
 - org.junit.jupiter.api
 
 ## Requirements
-1 to run this program, you should install jre 8 (java) and JDK 17.0.1/2
-2 You should dezip to repository
-3 in the src folder, run the file ConferenceManagement file with the command in the command line: java ConferenceManagement
+1. to run this program, you should install jre 8 (java) and JDK 17.0.1/2
+2. You should dezip to repository
+3. in the src folder, run the file ConferenceManagement file with the command in the command line: java ConferenceManagement
