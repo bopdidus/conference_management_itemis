@@ -28,8 +28,6 @@ public class ConferenceManagementTest {
         System.out.println("CreateTalk");
         String title = "";
         int time = 23;
-        int expResult = 0;
-        Talk result = null;
 
         assertThrowsExactly(Exception.class, ()->{
             new Talk(title,time);

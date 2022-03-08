@@ -47,13 +47,13 @@ public class VerifyTest{
         @Test
         public void CheckHoursMorningTest()
         {
-                assertEquals(180, Verify.CheckHoursMorning(track));
+                assertEquals(0, Verify.CheckHoursMorning(track));
         }
 
         @Test
         public void CheckHourNetworkingEventTest()
         {
                 int somme = Verify.CheckHourNetworkingEvent(track);
-                assertTrue((somme <= 240 && 180 <= somme));
+                assertFalse((somme <= 240 && 180 <= somme));
         }
 }

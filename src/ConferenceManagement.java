@@ -1,4 +1,5 @@
 import Model.*;
+import Utils.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +20,17 @@ public class ConferenceManagement {
         System.out.println("***************WELCOME TO CONFERENCE MANAGEMENT SYSTEM**********************************");
         System.out.println("");
         System.out.println("");
-        System.out.println("");
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the theme of the conference");
         String theme = sc.nextLine();
         conf = new Conference(theme);
-        talks = CreateTalk();
-        System.out.println("List of talks");
 
         try {
+            talks = CreateTalk();
+            System.out.println("List of talks");
             conf.setTracks(CreateTrack(CreateSession(talks)));
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -37,7 +38,7 @@ public class ConferenceManagement {
         ShowConference(conf);
     }
 
-    public static List<Talk> CreateTalk(){
+    public static List<Talk> CreateTalk() throws Exception{
 
         List<Talk> talks = new ArrayList<Talk>();
         String title="";
@@ -50,14 +51,18 @@ public class ConferenceManagement {
             System.out.println("Enter the title:");
             System.out.print(">");
             title = sc.nextLine();
+            if(Verify.ContainsDigit(title) == true || title.isEmpty())
+                throw new Exception("The title should not contains a digit or shoud not be empty");
 
             if(title.equalsIgnoreCase("q") == true)
                 break;
 
             System.out.println("Enter the time:");
-
             try {
                 time = sc.nextInt();
+                if(Verify.CheckLigthningFive(time)!=true)
+                    throw new Exception("The time should be in 5 lightning");
+
                 talks.add(new Talk(title, time));
                 sc.nextLine();
             } catch (Exception e) {
@@ -92,6 +97,7 @@ public class ConferenceManagement {
         List<Track>tracks = new ArrayList<>();
         List<Session> morningSession = new ArrayList<>();
         List<Session> afternoonSession = new ArrayList<>();
+        //We separate into two categories morning and afternoon
         for(int i = 0; i<list.size();i++){
             if(list.get(i).getType() == SessionType.MORNING){
                 morningSession.add(list.get(i));
@@ -99,6 +105,7 @@ public class ConferenceManagement {
                 afternoonSession.add(list.get(i));
             }
         }
+        // then we add morning session
         for (Session s: morningSession){
             try {
                 Track t = new Track();
@@ -109,6 +116,7 @@ public class ConferenceManagement {
             }
         }
 
+        //the number of track was created by morning session, so I go through that list of track and add afternoon session
         for(int j= 0; j<afternoonSession.size();j++){
             try {
                 tracks.get(j).setAfternoonSession(afternoonSession.get(j));

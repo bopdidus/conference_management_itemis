@@ -6,14 +6,8 @@ public class Talk {
     private String title;
     private int time;
 
-    public Talk(String _title, int _time) throws Exception{
-        if(Verify.ContainsDigit(_title)==true)
-            throw new Exception("The title should not contains a digit");
-        if(_title.isEmpty())
-            throw new Exception("The title should not be empty");
+    public Talk(String _title, int _time){
         this.title = _title;
-        if(Verify.CheckLigthningFive(_time)!=true)
-            throw new Exception("The time should be in 5 lightning");
         this.time = _time;
     }
 
