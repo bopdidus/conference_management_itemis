@@ -1,5 +1,5 @@
 # Conference Management
-> This project is a test in oder to get a training
+> This project is a test in oder to get an intership
 
 ## Description
 this is a console project
